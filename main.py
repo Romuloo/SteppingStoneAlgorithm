@@ -13,3 +13,5 @@ matriz = [[(False, 0), (True, 1), (False, 1)],
 
 print('waters: ' + str(ss.water(matriz)))
 print('stones: ' + str(ss.stone(matriz)))
+
+print('path_1: ' + str(ss.form_graph((0, 0), ss.stone(matriz)).get((0, 0))))
