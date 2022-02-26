@@ -44,25 +44,28 @@ class SteppingStone:
     def form_path(v, matrix):
         found = False
         vx = v
-        stones = [vx]
-
+        so = []
+        sa = []
         while not found:
-            if len(stones) > 0:
-                vx = stones.pop()
-
+            if len(so) > 0:
+                vx = so.pop()
             if SteppingStone.check_abscissa(vx, matrix):
                 for i in range(len(matrix[0])):
                     if matrix[vx[0]][i][0] and i != vx[1]:
-                        stones.append((vx[0], i))   # todas las piedras de la horizontal
-                for stone in stones:
+                        sa.append((vx[0], i))
+                for stone in sa:
+                    if not SteppingStone.check_ordinate(stone, matrix):
+                        sa.remove(stone)
                     if stone == v:
                         found = True
-                    if not SteppingStone.check_ordinate(stone, matrix):  # por cada piedra de la horizontal, si no tiene vertical, la anulo.
-                        stones.remove(stone)
-            found = True
-
-
-
-
-        return stones
+            for stone in sa:
+                for j in range(len(matrix)):
+                    if matrix[j][stone[1]][0] and j != stone[0]:
+                        so.append((j, stone[1]))
+                for stone_2 in so:
+                    if not SteppingStone.check_abscissa(stone_2, matrix):
+                        so.remove(stone_2)
+                    if stone_2 == v:
+                        found = True
+        return [sa, so]
 
