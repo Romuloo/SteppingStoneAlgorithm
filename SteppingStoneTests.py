@@ -18,7 +18,9 @@ class TestSteppingStone:
                 [(True, 1), (True, 1), (False, 1), (False, 1)],
                 [(True, 1), (False, 1), (False, 1), (True, 1)]]
 
-
+    matrix_5 = [[(True, 5), (False, 3), (False, 2)],
+                [(False, 2), (True, 6), (True, 4)],
+                [(False, 4), (True, 8), (False, 3)]]
 
     def test_water(self):
         assert 1 == len(ss.water(self.matrix_2))
@@ -34,4 +36,5 @@ class TestSteppingStone:
 
     def test_medium_position(self):
         assert [[(1, 3), (3, 0), (2, 1)], [(3, 3), (3, 3), (2, 0), (1, 1)]] == ss.form_path((1, 1), self.matrix_4)
+
 

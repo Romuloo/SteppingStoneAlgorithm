@@ -1,4 +1,5 @@
 import copy
+import random
 from collections import defaultdict
 
 __author__ = "Javier Linares Castrillón"
@@ -40,8 +41,10 @@ class SteppingStone:
                 counter += 1
         return counter != 0
 
+    # This method forms the path for 1 water cell
     @staticmethod
     def form_path(v, matrix):
+        matrix[v[0]][v[1]] = (True, matrix[v[0]][v[1]][1])
         found = False
         vx = v
         so = []
@@ -67,5 +70,34 @@ class SteppingStone:
                         so.remove(stone_2)
                     if stone_2 == v:
                         found = True
+        if found:
+            matrix[v[0]][v[1]] = (False, matrix[v[0]][v[1]][1])
+        print([sa, so])
         return [sa, so]
+
+    @staticmethod
+    def stepping_stones(matrix):
+        paths = []
+        results = {}
+        for water in SteppingStone.water(matrix):
+            paths.append(SteppingStone.form_path(water, matrix))
+        for path in paths:
+            suma = 0
+            aux_i = 0
+            for i in range(len(path[1])):
+                try:
+                    suma += matrix[path[0][i][0]][path[0][i][1]][1] * -1
+                except IndexError:
+                    print('list index out of range')
+                try:
+                    suma += matrix[path[1][i][0]][path[1][i][1]][1]
+                except IndexError:
+                    print('list index out of range')
+                aux_i = i
+            results[matrix[path[1][aux_i][0]][path[1][aux_i][1]]] = suma
+
+        for t in results:
+            if results[t] < 0:
+                return (t, results[t])
+        return True
 
